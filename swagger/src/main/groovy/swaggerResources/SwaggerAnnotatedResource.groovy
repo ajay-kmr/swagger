@@ -1,4 +1,4 @@
-package testResources
+package swaggerResources
 
 import dto.CityDTO
 import dto.ResponseDTO
@@ -6,9 +6,10 @@ import grails.converters.JSON
 import io.swagger.annotations.*
 import org.springframework.web.multipart.MultipartFile
 
+import javax.servlet.http.HttpServletRequest
+
 @Api(value = "/api/v1", tags = ["City"], description = "City Api's")
-class SwaggerAnnotatedController {
-    static namespace = 'v1'
+class SwaggerAnnotatedResource {
 
     @ApiOperation(
             value = "List Cities",
@@ -28,7 +29,7 @@ class SwaggerAnnotatedController {
             @ApiImplicitParam(name = "Accept-Language", paramType = "header", required = true, defaultValue = "en", value = "Accept-Language", dataType = "string")
     ])
     def getCity(String cityId) {
-        render(new ResponseDTO(status: true, message: "New Delhi", data: ["key1": "value1", "key2": "value2"]) as JSON)
+        (new ResponseDTO(status: true, message: "New Delhi", data: ["key1": "value1", "key2": "value2"]) as JSON)
     }
 
     @ApiOperation(
@@ -50,7 +51,7 @@ class SwaggerAnnotatedController {
             @ApiImplicitParam(name = "Accept-Language", paramType = "header", required = true, defaultValue = "en", value = "Accept-Language", dataType = "string")
     ])
     def getCityList(Integer offset, Integer limit) {
-        render(new ResponseDTO(status: true, message: "City List fetched successfully", data: ["key1": "value1", "key2": "value2"]) as JSON)
+        (new ResponseDTO(status: true, message: "City List fetched successfully", data: ["key1": "value1", "key2": "value2"]) as JSON)
     }
 
     @ApiOperation(
@@ -72,7 +73,7 @@ class SwaggerAnnotatedController {
             @ApiImplicitParam(name = "Accept-Language", paramType = "header", required = true, defaultValue = "en", value = "Accept-Language", dataType = "string")
     ])
     def createOrUpdateCity(CityDTO cityDTO) {
-        render(new ResponseDTO(status: true, message: "City updated successfully", data: cityDTO) as JSON)
+        (new ResponseDTO(status: true, message: "City updated successfully", data: cityDTO) as JSON)
     }
 
     @ApiOperation(
@@ -92,7 +93,7 @@ class SwaggerAnnotatedController {
             @ApiImplicitParam(name = "Accept-Language", paramType = "header", required = true, defaultValue = "en", value = "Accept-Language", dataType = "string")
     ])
     def deleteCity(String cityId) {
-        render(new ResponseDTO(status: true, message: "City deleted successfully") as JSON)
+        (new ResponseDTO(status: true, message: "City deleted successfully") as JSON)
     }
 
     @ApiOperation(value = "Upload File Example",
@@ -109,10 +110,10 @@ class SwaggerAnnotatedController {
                     required = true,
                     value = "Requires File Containing City Information",
                     dataType = "java.io.File")])
-    ResponseDTO uploadCityData() {
+    ResponseDTO uploadCityData(HttpServletRequest request) {
         MultipartFile file = request.getFile('cityFile')
         //Do with file
-        render(new ResponseDTO(status: true, message: "File with name ${file?.originalFilename} uploaded successfully") as JSON)
+        (new ResponseDTO(status: true, message: "File with name ${file?.originalFilename} uploaded successfully") as JSON)
     }
 
 }

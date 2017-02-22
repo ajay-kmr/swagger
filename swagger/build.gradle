@@ -93,13 +93,12 @@ assets {
 
 jar {
     exclude "grails-app/views/error.gsp",
-//            "grails-app/controller/testResources/**",
-//            "**/testResources**",
+            "**/swaggerResources**",
             "**/logback.groovy",
             "**/logback.xml",
             "**/logback**",
             "**/logback/**",
-//            "**/co/**",
-//            "**/dto/**",
+            "**/co/**",
+            "**/dto/**",
             "**/schema_v2_0.json"
 }

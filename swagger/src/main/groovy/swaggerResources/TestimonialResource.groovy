@@ -1,26 +1,14 @@
-package testResources
+package swaggerResources
 
 import co.TestimonialCO
 import dto.ResponseDTO
 import dto.TestimonialDTO
 import grails.converters.JSON
 import io.swagger.annotations.*
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 
 @Api(value = "/api/v1", tags = ["Testimonial"], description = "Testimonial Api's")
-class TestimonialController {
-
-    static namespace = 'v1'
-
-    static allowedMethods = [
-            getTestimonial                : ['GET', 'POST'],
-            newTestimonial                : 'POST',
-            saveOrUpdateTestimonial       : 'POST',
-            deleteTestimonial             : 'DELETE',
-            fetchTestimonialImageUrl      : 'GET',
-            fetchTestimonialAggregateScore: 'GET'
-    ]
-
+class TestimonialResource {
+    
     @ApiOperation(
             value = "List Testimonial",
             notes = "List Testimonial",
@@ -30,15 +18,32 @@ class TestimonialController {
             nickname = "testimonial",
             response = ResponseDTO.class)
     @ApiResponses([
-            @ApiResponse(code = 405, message = "Method Not Allowed. Only GET is allowed"),
-            @ApiResponse(code = 404, message = "Method Not Found")])
+            @ApiResponse(code = 405,
+                    message = "Method Not Allowed. Only GET is allowed"),
+            @ApiResponse(code = 404,
+                    message = "Method Not Found")])
     @ApiImplicitParams([
-            @ApiImplicitParam(name = "id", value = "Requires integer Testimonial Id", defaultValue = "1", required = false, paramType = "query", dataType = "string"),
-            @ApiImplicitParam(name = "applicationType", paramType = "header", required = true, defaultValue = "web", value = "Application Types", dataType = "string"),
-            @ApiImplicitParam(name = "Accept-Language", paramType = "header", required = true, defaultValue = "en", value = "Accept-Language", dataType = "string")
+            @ApiImplicitParam(name = "id",
+                    value = "Requires integer Testimonial Id",
+                    defaultValue = "1",
+                    required = false,
+                    paramType = "query",
+                    dataType = "string"),
+            @ApiImplicitParam(name = "applicationType",
+                    paramType = "header",
+                    required = true,
+                    defaultValue = "web",
+                    value = "Application Types",
+                    dataType = "string"),
+            @ApiImplicitParam(name = "Accept-Language",
+                    paramType = "header",
+                    required = true,
+                    defaultValue = "en",
+                    value = "Accept-Language",
+                    dataType = "string")
     ])
     def getTestimonial(TestimonialDTO testimonialDTO) {
-        render(new ResponseDTO(status: Boolean.TRUE, data: testimonialDTO))
+        (new ResponseDTO(status: Boolean.TRUE, data: testimonialDTO))
     }
 
     @ApiOperation(
@@ -50,16 +55,32 @@ class TestimonialController {
             nickname = "testimonial",
             response = ResponseDTO.class
     )
-    @ApiResponses([@ApiResponse(code = 405, message = "Method Not Allowed. Only POST is allowed"),
-            @ApiResponse(code = 404, message = "Method Not Found")
+    @ApiResponses([@ApiResponse(code = 405,
+            message = "Method Not Allowed. Only POST is allowed"),
+            @ApiResponse(code = 404,
+                    message = "Method Not Found")
     ])
     @ApiImplicitParams([
-            @ApiImplicitParam(name = 'body', paramType = 'body', required = true, value = "Requires Testimonial Multipart form data", dataType = "com.dt.dtcore.dto.TestimonialDTO"),
-            @ApiImplicitParam(name = "applicationType", paramType = "header", required = true, defaultValue = "web", value = "Application Types", dataType = "string"),
-            @ApiImplicitParam(name = "Accept-Language", paramType = "header", required = true, defaultValue = "en", value = "Accept-Language", dataType = "string")
+            @ApiImplicitParam(name = 'body',
+                    paramType = 'body',
+                    required = true,
+                    value = "Requires Testimonial Multipart form data",
+                    dataType = "com.dt.dtcore.dto.TestimonialDTO"),
+            @ApiImplicitParam(name = "applicationType",
+                    paramType = "header",
+                    required = true,
+                    defaultValue = "web",
+                    value = "Application Types",
+                    dataType = "string"),
+            @ApiImplicitParam(name = "Accept-Language",
+                    paramType = "header",
+                    required = true,
+                    defaultValue = "en",
+                    value = "Accept-Language",
+                    dataType = "string")
     ])
     def saveOrUpdateTestimonial(TestimonialDTO testimonialDTO) {
-        render(new ResponseDTO(status: Boolean.TRUE, data: testimonialDTO))
+        (new ResponseDTO(status: Boolean.TRUE, data: testimonialDTO))
     }
 
     @ApiOperation(
@@ -95,7 +116,7 @@ class TestimonialController {
             @ApiImplicitParam(name = "X-Sales-Channel", paramType = "header", required = true, defaultValue = "web", value = "X-Sales-Channel", dataType = "string")
     ])
     def newTestimonial(TestimonialCO testimonialCO) {
-        render(new ResponseDTO(status: Boolean.TRUE, message: "New testimonial uploaded successfully with name- ${testimonialCO?.testimonialImageFile?.getOriginalFilename()}"))
+        (new ResponseDTO(status: Boolean.TRUE, message: "New testimonial uploaded successfully with name- ${testimonialCO?.testimonialImageFile?.getOriginalFilename()}"))
     }
 
     @ApiOperation(
@@ -108,16 +129,31 @@ class TestimonialController {
     @ApiResponses([@ApiResponse(code = 405, message = "Method Not Allowed. Only Delete is allowed"),
             @ApiResponse(code = 404, message = "Method Not Found")])
     @ApiImplicitParams([
-            @ApiImplicitParam(name = "id", value = "Requires integer Testimonial Id for delete", defaultValue = "1", required = false, paramType = "query", dataType = "string"),
-            @ApiImplicitParam(name = "applicationType", paramType = "header", required = true, defaultValue = "web", value = "Application Types", dataType = "string"),
-            @ApiImplicitParam(name = "Accept-Language", paramType = "header", required = true, defaultValue = "en", value = "Accept-Language", dataType = "string")
+            @ApiImplicitParam(name = "id",
+                    value = "Requires integer Testimonial Id for delete",
+                    defaultValue = "1",
+                    required = false,
+                    paramType = "query",
+                    dataType = "string"),
+            @ApiImplicitParam(name = "applicationType",
+                    paramType = "header",
+                    required = true,
+                    defaultValue = "web",
+                    value = "Application Types",
+                    dataType = "string"),
+            @ApiImplicitParam(name = "Accept-Language",
+                    paramType = "header",
+                    required = true,
+                    defaultValue = "en",
+                    value = "Accept-Language",
+                    dataType = "string")
     ])
     def deleteTestimonial(Long id, String lastUpdatedBy) {
-        render(new TestimonialDTO(id: id, lastUpdatedBy: lastUpdatedBy) as JSON)
+        (new TestimonialDTO(id: id, lastUpdatedBy: lastUpdatedBy) as JSON)
     }
 
     def fetchTestimonialAggregateScore() {
-        render(new ResponseDTO(status: Boolean.TRUE, data: 5))
+        (new ResponseDTO(status: Boolean.TRUE, data: 5))
     }
 
     @ApiOperation(
@@ -161,6 +197,6 @@ class TestimonialController {
                     dataType = "string")
     ])
     def fetchTestimonials(TestimonialDTO testimonialDTO) {
-        render(new ResponseDTO(status: Boolean.TRUE, data: testimonialDTO))
+        (new ResponseDTO(status: Boolean.TRUE, data: testimonialDTO))
     }
 }

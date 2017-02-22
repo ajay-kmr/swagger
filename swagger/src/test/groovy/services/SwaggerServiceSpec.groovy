@@ -18,9 +18,9 @@ import org.springframework.core.io.Resource
 import spock.lang.Shared
 import spock.lang.Specification
 import swagger.SwaggerService
-import testResources.NonSwaggerAnnotatedController
-import testResources.SwaggerAnnotatedController
-import testResources.TestimonialController
+import swaggerResources.NonSwaggerAnnotatedResource
+import swaggerResources.SwaggerAnnotatedResource
+import swaggerResources.TestimonialResource
 
 @TestFor(SwaggerService)
 class SwaggerServiceSpec extends Specification {
@@ -65,8 +65,8 @@ class SwaggerServiceSpec extends Specification {
 
         given: "class annotated with valid swagger annotation"
         service.applicationContext.getBeansWithAnnotation(Api.class) >> [
-                (SwaggerAnnotatedController.name): (new SwaggerAnnotatedController()),
-                (TestimonialController.name)     : (new TestimonialController())
+                (SwaggerAnnotatedResource.name): (new SwaggerAnnotatedResource()),
+                (TestimonialResource.name)     : (new TestimonialResource())
         ]
 
         when: "service is called to generate swagger document as per Swagger 2.0 API"
@@ -79,7 +79,7 @@ class SwaggerServiceSpec extends Specification {
     void "test invalid swagger JSON document generation as per JSON Schema for Swagger 2.0 API"() {
 
         given: "class not annotated with valid swagger annotation"
-        service.applicationContext.getBeansWithAnnotation(Api.class) >> [(NonSwaggerAnnotatedController.name): (new NonSwaggerAnnotatedController())]
+        service.applicationContext.getBeansWithAnnotation(Api.class) >> [(NonSwaggerAnnotatedResource.name): (new NonSwaggerAnnotatedResource())]
 
         when: "service is called to generate swagger document as per Swagger 2.0 API"
         String jsonDocument = service.generateSwaggerDocument()
