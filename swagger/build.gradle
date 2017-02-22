@@ -80,8 +80,8 @@ grailsPublish {
     license {
         name = 'Apache-2.0'
     }
-    title = "My Plugin"
-    desc = "Full plugin description"
+    title = "Grails Swagger Plugin"
+    desc = "Grails Swagger Plugin"
     developers = [ajay: "Ajay Kumar"]
     portalUser = ""
     portalPassword = ""
@@ -89,4 +89,17 @@ grailsPublish {
 
 assets {
     packagePlugin = true
+}
+
+jar {
+    exclude "grails-app/views/error.gsp",
+//            "grails-app/controller/testResources/**",
+//            "**/testResources**",
+            "**/logback.groovy",
+            "**/logback.xml",
+            "**/logback**",
+            "**/logback/**",
+//            "**/co/**",
+//            "**/dto/**",
+            "**/schema_v2_0.json"
 }

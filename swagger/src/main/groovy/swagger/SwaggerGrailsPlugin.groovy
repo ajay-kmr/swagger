@@ -11,18 +11,22 @@ class SwaggerGrailsPlugin extends Plugin {
     // resources that are excluded from plugin packaging
     def pluginExcludes = [
             "grails-app/views/error.gsp",
-            "grails-app/controller/testResources/**",
+//            "grails-app/controller/testResources/**",
+//            "**/testResources**",
             "**/logback.groovy",
             "**/logback.xml",
             "**/logback**",
-            "**/logback/**"
+            "**/logback/**",
+//            "**/co/**",
+//            "**/dto/**",
+            "**/schema_v2_0.json"
     ]
 
-    def title = "Grails Swagger" // Headline display name of the plugin
+    def title = "Grails Swagger"
     def author = "Ajay Kumar"
     def authorEmail = "ajay.kumar@totthenew.com"
     def description = '''\
-Plugin For Swagger Documentation Of Grails Controllers
+Grails Plugin For Swagger Documentation
 '''
     def profiles = ['web']
 
@@ -73,7 +77,7 @@ Plugin For Swagger Documentation Of Grails Controllers
                         name: license.name ?: StringUtils.EMPTY,
                         url: license.url ?: StringUtils.EMPTY))
                 info = swaggerInfo
-                host = swaggerAsMap.host ?: "localhost:8080"
+//                host = swaggerAsMap.host ?: "localhost:8080"
                 schemes = swaggerAsMap.schemes ?: [Scheme.HTTP]
                 consumes = swaggerAsMap.consumes ?: ["application/json"]
             }

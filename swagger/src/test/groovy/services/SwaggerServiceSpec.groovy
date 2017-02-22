@@ -20,6 +20,7 @@ import spock.lang.Specification
 import swagger.SwaggerService
 import testResources.NonSwaggerAnnotatedController
 import testResources.SwaggerAnnotatedController
+import testResources.TestimonialController
 
 @TestFor(SwaggerService)
 class SwaggerServiceSpec extends Specification {
@@ -63,7 +64,10 @@ class SwaggerServiceSpec extends Specification {
     void "test swagger JSON document generation as per JSON Schema for Swagger 2.0 API"() {
 
         given: "class annotated with valid swagger annotation"
-        service.applicationContext.getBeansWithAnnotation(Api.class) >> [(SwaggerAnnotatedController.name): (new SwaggerAnnotatedController())]
+        service.applicationContext.getBeansWithAnnotation(Api.class) >> [
+                (SwaggerAnnotatedController.name): (new SwaggerAnnotatedController()),
+                (TestimonialController.name)     : (new TestimonialController())
+        ]
 
         when: "service is called to generate swagger document as per Swagger 2.0 API"
         String jsonDocument = service.generateSwaggerDocument()

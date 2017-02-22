@@ -16,7 +16,6 @@ swagger {
             url = "http://www.tothenew.com/"
         }
     }
-    host = "localhost:8080"
     schemes = [Scheme.HTTP]
     consumes = ["application/json"]
 }
