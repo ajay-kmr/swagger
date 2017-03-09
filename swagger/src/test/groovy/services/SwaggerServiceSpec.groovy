@@ -18,9 +18,9 @@ import org.springframework.core.io.Resource
 import spock.lang.Shared
 import spock.lang.Specification
 import swagger.SwaggerService
-import swaggerResources.NonSwaggerAnnotatedResource
-import swaggerResources.SwaggerAnnotatedResource
-import swaggerResources.TestimonialResource
+import services.swaggerResources.NonSwaggerAnnotatedResource
+import services.swaggerResources.SwaggerAnnotatedResource
+import services.swaggerResources.TestimonialResource
 
 @TestFor(SwaggerService)
 class SwaggerServiceSpec extends Specification {

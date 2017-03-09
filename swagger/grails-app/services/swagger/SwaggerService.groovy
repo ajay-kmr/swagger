@@ -35,7 +35,7 @@ class SwaggerService implements ApplicationContextAware {
         return swagger;
     }
 
-    public static String getJsonDocument(Swagger swagger) {
+     static String getJsonDocument(Swagger swagger) {
         String resultantJSON = null;
         if (swagger != null) {
             try {
@@ -47,7 +47,7 @@ class SwaggerService implements ApplicationContextAware {
         return resultantJSON;
     }
 
-    public static String getYamlDocument(Swagger swagger) {
+     static String getYamlDocument(Swagger swagger) {
         String resultantJSON = null;
         if (swagger != null) {
             try {

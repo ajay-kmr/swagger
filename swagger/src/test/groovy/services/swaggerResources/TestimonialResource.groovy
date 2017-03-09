@@ -1,4 +1,4 @@
-package swaggerResources
+package services.swaggerResources
 
 import co.TestimonialCO
 import dto.ResponseDTO

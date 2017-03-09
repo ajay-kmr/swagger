@@ -11,7 +11,7 @@ class SwaggerGrailsPlugin extends Plugin {
     // resources that are excluded from plugin packaging
     def pluginExcludes = [
             "grails-app/views/error.gsp",
-            "**/swaggerResources**",
+            "**/services.swaggerResources**",
             "**/logback.groovy",
             "**/logback.xml",
             "**/logback**",

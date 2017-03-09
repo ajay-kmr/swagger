@@ -1,4 +1,4 @@
-package swaggerResources
+package services.swaggerResources
 
 import dto.CityDTO
 import dto.ResponseDTO
