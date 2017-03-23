@@ -68,7 +68,7 @@ dependencies {
     compile group: 'io.swagger', name: 'swagger-models', version: '1.5.5'
     compile group: 'io.swagger', name: 'swagger-servlet', version: '1.5.5'
     compile "org.webjars:swagger-ui:2.2.5"
-    compile group: 'com.github.fge', name: 'json-schema-validator', version: '2.2.6'
+    testRuntime group: 'com.github.fge', name: 'json-schema-validator', version: '2.2.6'
 //    runtime 'org.grails.plugins:grails-console:2.0.8'
 }
 grailsPublish {
