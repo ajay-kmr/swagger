@@ -21,8 +21,7 @@ class ApiDocController {
             response.contentType = 'application/json'
             render swaggerJson
         } else {
-            String apiLink = g.createLink(uri: '/apidoc')
-            redirect uri: "/webjars/swagger-ui/2.2.5/index.html?url=${apiLink}"
+            redirect uri: "/webjars/swagger-ui/2.2.5/index.html?url=${request.getRequestURI()}"
         }
     }
 }
