@@ -59,8 +59,8 @@ dependencies {
     compile "org.webjars:swagger-ui:2.2.5"
 }
 grailsPublish {
-    userOrg = 'intelligrape'
-    githubSlug = 'foo/bar'
+    userOrg = 'ajay-kumar'
+    githubSlug = 'ajay-kmr/swagger'
     license {
         name = 'Apache-2.0'
     }
