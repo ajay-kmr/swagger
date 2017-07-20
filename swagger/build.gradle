@@ -27,6 +27,8 @@ apply plugin: "asset-pipeline"
 ext {
     grailsVersion = project.grailsVersion
     gradleWrapperVersion = project.gradleWrapperVersion
+    swaggerVersion = '1.5.15'
+    swaggerUIVersion = '3.0.17'
 }
 
 repositories {
@@ -49,14 +51,17 @@ dependencies {
     compile "org.grails:grails-web-boot"
     profile "org.grails.profiles:web-plugin"
     provided "org.grails:grails-plugin-services"
+    testCompile "org.grails:grails-plugin-testing"
     testCompile "org.grails.plugins:geb"
     testRuntime group: 'com.github.fge', name: 'json-schema-validator', version: '2.2.6'
+    testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
+    testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
 
-    compile group: 'io.swagger', name: 'swagger-core', version: '1.5.5'
-    compile group: 'io.swagger', name: 'swagger-annotations', version: '1.5.5'
-    compile group: 'io.swagger', name: 'swagger-models', version: '1.5.5'
-    compile group: 'io.swagger', name: 'swagger-servlet', version: '1.5.5'
-    compile "org.webjars:swagger-ui:2.2.5"
+//    compile group: 'io.swagger', name: 'swagger-core', version: "${swaggerVersion}"
+//    compile group: 'io.swagger', name: 'swagger-annotations', version: "${swaggerVersion}"
+    compile group: 'io.swagger', name: 'swagger-models', version: "${swaggerVersion}"
+    compile group: 'io.swagger', name: 'swagger-servlet', version: "${swaggerVersion}"
+    compile "org.webjars:swagger-ui:${swaggerUIVersion}"
 }
 grailsPublish {
     userOrg = 'ajay-kumar'
