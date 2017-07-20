@@ -22,7 +22,7 @@ repositories {
 }
 
 dependencies {
-    compile 'org.grails.plugins:swagger:0.1'
+    compile 'org.grails.plugins:swagger:1.0.0'
 }
 -----------------
 
