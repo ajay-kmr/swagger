@@ -25,7 +25,7 @@ dependencies {
     compile 'org.grails.plugins:swagger:1.0.0'
 }
 -----------------
-NOTE: Your logging might not work as per your expected logback back config file. +
+NOTE: Your logging might not work as per your expected logback config file. +
 This is an issue with swagger servlet jar.
 Issue has already been raised for this:- https://github.com/swagger-api/swagger-core/issues/1813[https://github.com/swagger-api/swagger-core/issues/1813] +
 However, you can easily overcome this issue by explicitly setting the name of your logback configuration file in your *_build.gradle_* using:- + 
