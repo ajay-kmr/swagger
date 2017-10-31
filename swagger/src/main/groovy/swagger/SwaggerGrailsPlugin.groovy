@@ -54,31 +54,30 @@ Grails Plugin For Swagger Documentation
 
     Closure doWithSpring() {
         { ->
-            // TODO Implement runtime spring config (optional)
-
             swagger(Swagger) {
-                Map swaggerAsMap = (config.swagger as Map) ?: [:]
-                Map infoAsMap = swaggerAsMap.info ?: [:]
+                Map swaggerConfig = (config.swagger as Map) ?: [:]
+                Map infoConfig = swaggerConfig.info ?: [:]
                 Info swaggerInfo = new Info(
-                        description: infoAsMap.description ?: StringUtils.EMPTY,
-                        version: infoAsMap.version ?: StringUtils.EMPTY,
-                        title: infoAsMap.title ?: StringUtils.EMPTY,
-                        termsOfService: infoAsMap.termsOfServices ?: StringUtils.EMPTY)
-
-                Map contact = infoAsMap.contact ?: [:]
+                        description: infoConfig.description ?: StringUtils.EMPTY,
+                        version: infoConfig.version ?: StringUtils.EMPTY,
+                        title: infoConfig.title ?: StringUtils.EMPTY,
+                        termsOfService: infoConfig.termsOfServices ?: StringUtils.EMPTY
+                )
+                Map contactConfig = infoConfig.contact ?: [:]
                 swaggerInfo.setContact(new Contact(
-                        name: contact.name ?: StringUtils.EMPTY,
-                        url: contact.url ?: StringUtils.EMPTY,
-                        email: contact.email ?: StringUtils.EMPTY))
-
-                Map license = infoAsMap.license ?: [:]
+                        name: contactConfig.name ?: StringUtils.EMPTY,
+                        url: contactConfig.url ?: StringUtils.EMPTY,
+                        email: contactConfig.email ?: StringUtils.EMPTY)
+                )
+                Map licenseConfig = infoConfig.license ?: [:]
                 swaggerInfo.license(new License(
-                        name: license.name ?: StringUtils.EMPTY,
-                        url: license.url ?: StringUtils.EMPTY))
+                        name: licenseConfig.name ?: StringUtils.EMPTY,
+                        url: licenseConfig.url ?: StringUtils.EMPTY)
+                )
                 info = swaggerInfo
 //                host = swaggerAsMap.host ?: "localhost:8080"
-                schemes = swaggerAsMap.schemes ?: [Scheme.HTTP]
-                consumes = swaggerAsMap.consumes ?: ["application/json"]
+                schemes = swaggerConfig.schemes ?: [Scheme.HTTP]
+                consumes = swaggerConfig.consumes ?: ["application/json"]
             }
         }
     }
