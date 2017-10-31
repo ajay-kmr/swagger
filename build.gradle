@@ -1,0 +1,10 @@
+
+
+// Apply the groovy plugin to add support for Groovy
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+
+
+// ext {
+    // gradleWrapperVersion = 3.5
+// }
