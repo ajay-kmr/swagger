@@ -53,12 +53,10 @@ dependencies {
     provided "org.grails:grails-plugin-services"
     testCompile "org.grails:grails-plugin-testing"
     testCompile "org.grails.plugins:geb"
-    testRuntime group: 'com.github.fge', name: 'json-schema-validator', version: '2.2.6'
+    testCompile 'com.github.fge:json-schema-validator:2.2.6'
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
-
-//    compile group: 'io.swagger', name: 'swagger-core', version: "${swaggerVersion}"
-//    compile group: 'io.swagger', name: 'swagger-annotations', version: "${swaggerVersion}"
+    //////
     compile group: 'io.swagger', name: 'swagger-models', version: "${swaggerVersion}"
     compile group: 'io.swagger', name: 'swagger-servlet', version: "${swaggerVersion}"
     compile "org.webjars:swagger-ui:${swaggerUIVersion}"
