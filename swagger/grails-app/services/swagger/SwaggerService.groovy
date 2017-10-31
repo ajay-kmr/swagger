@@ -30,16 +30,16 @@ class SwaggerService implements ApplicationContextAware {
         Map<String, Object> swaggerResourcesAsMap = applicationContext.getBeansWithAnnotation(Api.class)
         List<Class> swaggerResources = swaggerResourcesAsMap.collect { it?.value?.class }
         if (swaggerResources) {
-            Reader.read(swagger, new HashSet<Class<?>>(swaggerResources));
+            Reader.read(swagger, new HashSet<Class<?>>(swaggerResources))
         }
-        return swagger;
+        return swagger
     }
 
      static String getJsonDocument(Swagger swagger) {
         String resultantJSON = null;
         if (swagger != null) {
             try {
-                resultantJSON = Json.mapper().writeValueAsString(swagger);
+                resultantJSON = Json.mapper().writeValueAsString(swagger)
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
