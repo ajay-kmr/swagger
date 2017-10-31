@@ -6,10 +6,10 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 
 class ApiDocController {
-
     static responseFormats = ['json']
     static namespace = 'v1'
-    static allowedMethods = [getDocuments: ["GET"]]
+    static allowedMethods = [getDocuments: "GET"]
+
     SwaggerService swaggerService
 
     @Value("classpath*:**/webjars/swagger-ui/**/index.html")
@@ -17,21 +17,22 @@ class ApiDocController {
 
     def getDocuments() {
         if (request.getHeader('accept') && request.getHeader('accept').indexOf(MediaType.APPLICATION_JSON_VALUE) > -1) {
-            String swaggerJson = "Some error occurred."
             try {
-                swaggerJson = swaggerService.generateSwaggerDocument()
+                String swaggerJson = swaggerService.generateSwaggerDocument()
+                render contentType: MediaType.APPLICATION_JSON_UTF8_VALUE,
+                        text: swaggerJson
+
             } catch (Exception e) {
-                e.printStackTrace();
-                response.status = HttpStatus.INTERNAL_SERVER_ERROR.value()
+                e.printStackTrace()
+                render status: HttpStatus.INTERNAL_SERVER_ERROR,
+                        text: 'Some error occurred'
             }
-            response.contentType = MediaType.APPLICATION_JSON_UTF8_VALUE
-            render swaggerJson
         } else {
             redirect uri: "/webjars/swagger-ui${getSwaggerUiFile()}?url=${request.getRequestURI()}"
         }
     }
 
-    String getSwaggerUiFile() {
+    protected String getSwaggerUiFile() {
         try {
             (swaggerUiResources.getAt(0) as Resource).getURI().toString().split("/webjars/swagger-ui")[1]
         } catch (Exception e) {
