@@ -6,7 +6,6 @@ import io.swagger.annotations.Api
 import io.swagger.models.Swagger
 import io.swagger.servlet.Reader
 import io.swagger.util.Json
-import io.swagger.util.Yaml
 import org.apache.commons.lang.StringUtils
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ApplicationContextAware
@@ -28,35 +27,23 @@ class SwaggerService implements ApplicationContextAware {
         host = host.replace($/https:///$, StringUtils.EMPTY)
         swagger.setHost(host)
         Map<String, Object> swaggerResourcesAsMap = applicationContext.getBeansWithAnnotation(Api.class)
-        List<Class> swaggerResources = swaggerResourcesAsMap.collect { it?.value?.class }
+        List<Class> swaggerResources = swaggerResourcesAsMap.collect { it.value?.class }
         if (swaggerResources) {
             Reader.read(swagger, new HashSet<Class<?>>(swaggerResources))
         }
         return swagger
     }
 
-     static String getJsonDocument(Swagger swagger) {
-        String resultantJSON = null;
+    static String getJsonDocument(Swagger swagger) {
+        String swaggerJson = null
         if (swagger != null) {
             try {
-                resultantJSON = Json.mapper().writeValueAsString(swagger)
+                swaggerJson = Json.mapper().writeValueAsString(swagger)
             } catch (JsonProcessingException e) {
-                e.printStackTrace();
+                e.printStackTrace()  //todo: better error bubbling is needed here
             }
         }
-        return resultantJSON;
-    }
-
-     static String getYamlDocument(Swagger swagger) {
-        String resultantJSON = null;
-        if (swagger != null) {
-            try {
-                resultantJSON = Yaml.mapper().writeValueAsString(swagger);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-        }
-        return resultantJSON;
+        return swaggerJson
     }
 }
 
