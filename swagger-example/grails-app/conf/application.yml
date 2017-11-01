@@ -27,14 +27,19 @@ endpoints:
 ---
 grails:
     mime:
+        # Enable Accept Header for User Agent Requests, see:
+        # http://mrhaki.blogspot.com/2014/07/grails-goodness-enable-accept-header.html
+        use:
+            accept:
+                header: true
         disable:
             accept:
                 header:
-                    userAgents:
-                        - Gecko
-                        - WebKit
-                        - Presto
-                        - Trident
+                    userAgents: []
+#                        - Gecko
+#                        - WebKit
+#                        - Presto
+#                        - Trident
         types:
             all: '*/*'
             atom: application/atom+xml
