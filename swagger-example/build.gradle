@@ -60,7 +60,14 @@ dependencies {
 }
 
 bootRun {
-    jvmArgs = ['-Dspring.output.ansi.enabled=always']
+    jvmArgs = [
+            '-Dspring.output.ansi.enabled=always',
+            // due to swagger plugin's dependency swagger-servlet has an open issue that stops logback logging properly
+            // manually specify log config file to prevent auto-stacking of logging config from plugin dependencies
+            // see: https://github.com/swagger-api/swagger-core/issues/1813
+            // and: https://github.com/ajay-kmr/swagger/issues/4
+            "-Dlogging.config=${project.projectDir}/grails-app/conf/logback.groovy"
+    ]
 }
 
 assets {
