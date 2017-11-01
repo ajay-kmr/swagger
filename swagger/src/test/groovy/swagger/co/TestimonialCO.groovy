@@ -1,6 +1,6 @@
-package co
+package swagger.co
 
-import dto.Rating
+import swagger.dto.Rating
 import grails.validation.Validateable
 import org.springframework.web.multipart.MultipartFile
 

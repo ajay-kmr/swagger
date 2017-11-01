@@ -1,4 +1,4 @@
-package dto
+package swagger.dto
 
 class ResponseDTO {
     String message

@@ -1,4 +1,4 @@
-package dto
+package swagger.dto
 
 import grails.validation.Validateable
 import org.springframework.web.multipart.MultipartFile

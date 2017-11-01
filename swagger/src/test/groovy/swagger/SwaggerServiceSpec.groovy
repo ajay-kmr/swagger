@@ -1,4 +1,4 @@
-package services
+package swagger
 
 import com.fasterxml.jackson.core.JsonParseException
 import com.fasterxml.jackson.databind.JsonNode
@@ -17,15 +17,14 @@ import org.springframework.core.io.ClassPathResource
 import org.springframework.core.io.Resource
 import spock.lang.Shared
 import spock.lang.Specification
-import swagger.SwaggerService
-import services.swaggerResources.NonSwaggerAnnotatedResource
-import services.swaggerResources.SwaggerAnnotatedResource
-import services.swaggerResources.TestimonialResource
+import swagger.resources.NonSwaggerAnnotatedResource
+import swagger.resources.SwaggerAnnotatedResource
+import swagger.resources.TestimonialResource
 
 @TestFor(SwaggerService)
 class SwaggerServiceSpec extends Specification {
 
-    def @Shared
+    @Shared
     String jsonSchema_V2_0
 
     def setupSpec() {

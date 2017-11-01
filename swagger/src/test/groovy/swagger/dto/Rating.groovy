@@ -1,4 +1,4 @@
-package dto
+package swagger.dto
 
 public enum Rating {
     EXCELLENT("EXCELLENT"),

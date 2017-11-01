@@ -1,8 +1,8 @@
-package services.swaggerResources
+package swagger.resources
 
-import co.TestimonialCO
-import dto.ResponseDTO
-import dto.TestimonialDTO
+import swagger.co.TestimonialCO
+import swagger.dto.ResponseDTO
+import swagger.dto.TestimonialDTO
 import grails.converters.JSON
 import io.swagger.annotations.*
 
