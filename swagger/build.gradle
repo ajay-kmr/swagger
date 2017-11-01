@@ -51,6 +51,7 @@ dependencies {
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
     //////
+    testCompile 'com.github.fge:json-schema-validator:2.2.6'
     compile group: 'io.swagger', name: 'swagger-models', version: "${swaggerVersion}"
     compile group: 'io.swagger', name: 'swagger-servlet', version: "${swaggerVersion}"
     compile "org.webjars:swagger-ui:${swaggerUIVersion}"
