@@ -10,7 +10,7 @@ Table of Contents
 Introduction
 ~~~~~~~~~~~~~
 
-This plugin provides easy integration of Swagger with GRAILS. It is highly aligned with Swagger and its 2.0 specification, thereby creating a language-agnostic interface to REST APIs. This allows both humans and computers to discover and understand the capabilities of service without access to source code, documentation simply through network traffic inspection
+This plugin provides easy integration of Swagger with GRAILS. It is highly aligned with Swagger and its 2.0 specification, thereby creating a language-agnostic interface to REST APIs. This allows both humans and computers to discover and understand the capabilities of service without access to implementation details.
 
 Installation
 ~~~~~~~~~~~~~
