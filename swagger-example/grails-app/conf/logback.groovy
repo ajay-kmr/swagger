@@ -22,18 +22,31 @@ appender('STDOUT', ConsoleAppender) {
     }
 }
 
-def targetDir = BuildSettings.TARGET_DIR
-if (Environment.isDevelopmentMode() && targetDir != null) {
-    appender("FULL_STACKTRACE", FileAppender) {
-        file = "${targetDir}/stacktrace.log"
-        append = true
-        encoder(PatternLayoutEncoder) {
-            pattern = "%level %logger - %msg%n"
+if (Environment.isDevelopmentMode()) {
+    def targetDir = BuildSettings.TARGET_DIR
+    if (targetDir != null) {
+        appender("FULL_STACKTRACE", FileAppender) {
+            file = "${targetDir}/stacktrace.log"
+            append = true
+            encoder(PatternLayoutEncoder) {
+                pattern = "%level %logger - %msg%n"
+            }
         }
+        logger("StackTrace", ERROR, ['FULL_STACKTRACE'], false)
+        root(INFO, ['STDOUT', 'FULL_STACKTRACE'])
+    } else {
+        root(INFO, ['STDOUT'])
     }
-    logger("StackTrace", ERROR, ['FULL_STACKTRACE'], false)
-    root(ERROR, ['STDOUT', 'FULL_STACKTRACE'])
-}
-else {
-    root(ERROR, ['STDOUT'])
+
+    logger('grails.app.controllers', DEBUG, ['STDOUT'], false)
+    logger('grails.app.services', DEBUG, ['STDOUT'], false)
+    logger('grails.app.jobs', DEBUG, ['STDOUT'], false)
+    logger('grails.app.domain', DEBUG, ['STDOUT'], false)
+    logger('grails.app.taglibs', DEBUG, ['STDOUT'], false)
+    logger('grails.app.init.swagger.example.BootStrap', DEBUG, ['STDOUT'], false)
+    logger('swagger.example.BootStrap', DEBUG, ['STDOUT'], false)
+
+} else {
+
+    root(DEBUG, ['STDOUT'])
 }
