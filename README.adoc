@@ -15,17 +15,14 @@ This plugin provides easy integration of Swagger with GRAILS. It is highly align
 Installation
 ~~~~~~~~~~~~~
 . Add repository and dependency in your *_build.gradle_* file using below lines:- 
-[source,java] 
+[source,java]
 -----------------
-repositories {
-    maven { url "https://dl.bintray.com/ajay-kumar/plugins" }
-}
-
 dependencies {
-    compile 'org.grails.plugins:swagger:1.0.0'
+    compile 'org.grails.plugins:swagger:1.2.0'
 }
 -----------------
-NOTE: Your logging might not work as per your expected logback config file. +
+
+NOTE: Your host application logging might not work as per your expected logback config file. +
 This is an issue with swagger servlet jar.
 Issue has already been raised for this:- https://github.com/swagger-api/swagger-core/issues/1813[https://github.com/swagger-api/swagger-core/issues/1813] +
 However, you can easily overcome this issue by explicitly setting the name of your logback configuration file in your *_build.gradle_* using:- + 
