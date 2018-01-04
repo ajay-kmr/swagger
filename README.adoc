@@ -14,7 +14,7 @@ This plugin provides easy integration of Swagger with GRAILS. It is highly align
 
 Installation
 ~~~~~~~~~~~~~
-. Add repository and dependency in your *_build.gradle_* file using below lines:- 
+Add repository and dependency in your *_build.gradle_* file using below lines:
 [source,java]
 -----------------
 dependencies {
@@ -25,19 +25,21 @@ dependencies {
 NOTE: Your host application logging might not work as per your expected logback config file. +
 This is an issue with swagger servlet jar.
 Issue has already been raised for this:- https://github.com/swagger-api/swagger-core/issues/1813[https://github.com/swagger-api/swagger-core/issues/1813] +
-However, you can easily overcome this issue by explicitly setting the name of your logback configuration file in your *_build.gradle_* using:- + 
-[source,java] 
+However, you can easily overcome this issue by explicitly setting the name of your logback configuration file in your *_build.gradle_* using:
+[source,java]
+------
 bootRun {
     jvmArgs = [
             "-Dlogging.config=${project.projectDir}/grails-app/conf/logback.groovy"
     ]
 }
+------
 
-NOTE: Alternatively, you can also pass the name of logback configuration file using JVM argumants or system properties as follow:-
-[source,java] 
+NOTE: Alternatively, you can also pass the name of logback configuration file using JVM argumants or system properties as follow:
+[source,java]
+------
 java -Dlogback.configurationFile=/path/to/config.xml
-
-
+------
 Please refer https://logback.qos.ch/manual/configuration.html#configFileProperty[this link] to know more about how to set logback config file location.
 
 Configuration
@@ -51,7 +53,7 @@ NOTE: This API will be used to generate swagger document. So if you want to acce
 +
 NOTE: Please read https://github.com/swagger-api/swagger-ui#testing-cors-support[this article] to know if CORS support needs to be enabled or not for your application.
 
-. Create a configuration file (eg application.groovy) in conf folder present inside your application’s grails-app folder (if not created yet) and add the following configuration details:- 
+. Create a configuration file (eg application.groovy) in conf folder present inside your application’s grails-app folder (if not created yet) and add the following configuration details:
 
 application.groovy
 [source,java]
@@ -61,7 +63,7 @@ import io.swagger.models.Scheme
 swagger {
    info {
        description = "Move your app forward with the Swagger API Documentation"
-       version = "ttn-swagger-1.0.0"
+       version = "swagger-1.2.0"
        title = "Swagger API"
        termsOfServices = "http://swagger.io/"
        contact {
@@ -78,6 +80,7 @@ swagger {
    consumes = ["application/json"]
 }
 -----------------
+
 How To Use
 ~~~~~~~~~~~
 . A set of annotations is used to generate swagger documentation. Please refer https://github.com/swagger-api/swagger-core/wiki/Annotations[this link] to know more about the available annotations. 
@@ -86,7 +89,7 @@ NOTE: Only annotations provided by swagger-core are supported and JAX-RS annotat
 
 . Annotate your controller class with annotation _@io.swagger.annotations.Api_ to make it available for documentation. For more details see sample code.
 
-. Annotate your methods/action of controller with _@io.swagger.annotations.ApiOperation, @io.swagger.annotations.ApiResponses, @io.swagger.annotations.ApiImplicitParams_ to include various method level information in your documentation. *See next section to know more details about how to use these annotations.*
+. Annotate your actions of controller with _@io.swagger.annotations.ApiOperation, @io.swagger.annotations.ApiResponses, @io.swagger.annotations.ApiImplicitParams_ to include various method level information in your documentation. *See next section to know more details about how to use these annotations.*
 +
 NOTE: The value corresponding to *“value”* attribute of *API* annotation present at class level and the value corresponding to *“nickname”* attribute of *“ApiOperation”* annotation present at method level when combined together, _it should form the relative end point provided in UrlMappings.groovy._ 
  *Refer to explanation below the provided sample.*
@@ -121,10 +124,9 @@ class UrlMappings {
        "/api/v1/city/$cityId"(controller: "city", action: "deleteCity", method: "DELETE")
    }
 }
-
 -----------------
-Then your swagger annotated *CityController.groovy* is as follow:- 
 
+Then your swagger annotated *CityController.groovy* is as follow:
 
 [source,java]
 -----------------
