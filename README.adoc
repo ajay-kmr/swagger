@@ -6,6 +6,8 @@ Table of Contents
 . Configuration
 . How To Use
 . Sample Code
+. Change Log
+
 
 Introduction
 ~~~~~~~~~~~~~
@@ -14,11 +16,12 @@ This plugin provides easy integration of Swagger with GRAILS. It is highly align
 
 Installation
 ~~~~~~~~~~~~~
+
 Add repository and dependency in your *_build.gradle_* file using below lines:
 [source,java]
 -----------------
 dependencies {
-    compile 'org.grails.plugins:swagger:1.2.0'
+    compile 'org.grails.plugins:swagger:1.2.1'
 }
 -----------------
 
@@ -27,59 +30,40 @@ This is an issue with swagger servlet jar.
 Issue has already been raised for this:- https://github.com/swagger-api/swagger-core/issues/1813[https://github.com/swagger-api/swagger-core/issues/1813] +
 However, you can easily overcome this issue by explicitly setting the name of your logback configuration file in your *_build.gradle_* using:
 [source,java]
-------
+---------
 bootRun {
     jvmArgs = [
             "-Dlogging.config=${project.projectDir}/grails-app/conf/logback.groovy"
     ]
 }
-------
+---------
 
 NOTE: Alternatively, you can also pass the name of logback configuration file using JVM argumants or system properties as follow:
 [source,java]
-------
+---------
 java -Dlogback.configurationFile=/path/to/config.xml
-------
-Please refer https://logback.qos.ch/manual/configuration.html#configFileProperty[this link] to know more about how to set logback config file location.
+---------
+
+Please refer https://logback.qos.ch/manual/configuration.html#configFileProperty[this link] to know more about how to set logback config file location. +
+
+
 
 Configuration
 ~~~~~~~~~~~~~
 
-. Expose an API from your application by adding line-  *_"/apidoc/$action?/$id?"(controller: "apiDoc", action: "getDocuments")_* in your *UrlMappings.groovy* file under the *“static mappings”* block.
-+
-NOTE: This API will be used to generate swagger document. So if you want to access your swagger document with different URI, do the necessary changes here eg if you want to expose your swagger document using URI- *_api/vi/myDoc_* then you should add *_"/api/vi/myDoc/$action?/$id?"(controller: "apiDoc", action: "getDocuments")_* in your *UrlMappings.groovy* file under the *“static mappings”* block.
+By default, this plugin will add the following url mapping to host application:
+[source,java]
+---------
+"/apidoc/$action?/$id?"(controller: "apiDoc", action: "getDocuments")
+---------
 
-. If your application is located behind a proxy that enables the required CORS headers then you need to enable CORS support too. 
-+
+This exposes an API from your application as <app-url-root>/apidoc to render Swagger API Documents.
+You can override this mapping in *UrlMappings.groovy* file in host application's *_urlMapping.groovy_* file. +
+
+NOTE: If your application is located behind a proxy that enables the required CORS headers then you need to enable CORS support too.
+
 NOTE: Please read https://github.com/swagger-api/swagger-ui#testing-cors-support[this article] to know if CORS support needs to be enabled or not for your application.
 
-. Create a configuration file (eg application.groovy) in conf folder present inside your application’s grails-app folder (if not created yet) and add the following configuration details:
-
-application.groovy
-[source,java]
------------------
-import io.swagger.models.Scheme
-
-swagger {
-   info {
-       description = "Move your app forward with the Swagger API Documentation"
-       version = "swagger-1.2.0"
-       title = "Swagger API"
-       termsOfServices = "http://swagger.io/"
-       contact {
-           name = "Contact Us"
-           url = "http://swagger.io"
-           email = "contact@gmail.com"
-       }
-       license {
-           name = "licence under http://www.tothenew.com/"
-           url = "http://www.tothenew.com/"
-       }
-   }
-   schemes = [Scheme.HTTP]
-   consumes = ["application/json"]
-}
------------------
 
 How To Use
 ~~~~~~~~~~~
@@ -102,7 +86,7 @@ NOTE: If you are not explicitly providing the mapping of your actions defined in
 Sample Code
 ~~~~~~~~~~~~
 
-Assume your *UrlMappings.groovy* class is as follow:- 
+Assume your *UrlMappings.groovy* class is as follow: +
 
 [source,java]
 -----------------
@@ -126,7 +110,7 @@ class UrlMappings {
 }
 -----------------
 
-Then your swagger annotated *CityController.groovy* is as follow:
+Then your swagger annotated *CityController.groovy* is as follow: +
 
 [source,java]
 -----------------
@@ -320,15 +304,19 @@ class CityController {
    }
 
 }
-
 -----------------
-
 In the sample code provided above you can find that *CityController* is annotated with *@Api(value = "/api/v1", tags = ["City"], description = "City Api's")*.  So the value corresponding to *“value”* attribute of *“API”* annotation present at this class label is *"/api/v1"*. + 
 
-Similarly you can observe that *getCity()* method of *CityController* has annotation *@ApiOperation(value = "List Cities",  nickname = "city/{cityId}", produces = "application/json", consumes = "application/json",  httpMethod = "GET", response = ResponseDTO.class)*. Hence the value corresponding to *“nickname”* attribute of *“ApiOperation”* annotation present at this method label is *"city/{cityId}"*  and when these two values of *API* annotation and *ApiOperation* annotations  are combined together it gives- *"/api/v1/city/{cityId}"*. +
+Similarly you can observe that *getCity()* method of *CityController* has annotation *@ApiOperation(value = "List Cities",  nickname = "city/{cityId}", produces = "application/json", consumes = "application/json",  httpMethod = "GET", response = ResponseDTO.class)*. Hence the value corresponding to *“nickname”* attribute of *“ApiOperation”* annotation present at this method label is *"city/{cityId}"*  and when these two values of *API* annotation and *ApiOperation* annotations are combined together it gives *"/api/v1/city/{cityId}"*. +
 
-This combined value is Swagger's way of specifying the end url- *"/api/v1/city/$cityId"*  defined in *UrlMappings.groovy* file for *(controller: "city", action: "getCity", method: "GET")*
+This combined value is Swagger's way of specifying the end url- *"/api/v1/city/$cityId"*  defined in *UrlMappings.groovy* file for *(controller: "city", action: "getCity", method: "GET")* +
 
 
+Change Log +
+~~~~~~~~~~~~
+
+- v 1.2.1: Enhance the Object to Json Serializer to strip Grails Gorm traits such as Spring validation Errors type.
+
+- v 1.2.0: Plugin support Grails 3+
 
 

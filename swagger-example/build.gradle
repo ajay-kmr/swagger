@@ -10,7 +10,7 @@ buildscript {
     }
 }
 
-version "0.1"
+version "1.2.1"   // sync with plugin version
 group "swagger.example"
 
 apply plugin:"eclipse"
