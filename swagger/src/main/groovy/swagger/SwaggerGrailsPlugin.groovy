@@ -1,6 +1,7 @@
 package swagger
 
 import grails.plugins.Plugin
+import io.swagger.converter.ModelConverters
 import io.swagger.models.*
 import org.apache.commons.lang.StringUtils
 
@@ -78,7 +79,8 @@ Grails Plugin For Swagger API Documentation
     }
 
     void doWithApplicationContext() {
-        // TODO Implement post initialization spring config (optional)
+        // add custom model converters
+        ModelConverters.instance.addConverter(new GormPropertyConverter())
     }
 
     void onChange(Map<String, Object> event) {

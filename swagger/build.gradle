@@ -9,7 +9,7 @@ buildscript {
     }
 }
 
-version "1.2.0"  // 1.2.x for Grails 3.2.x
+version "1.2.1"  // 1.2.x for Grails 3.2.x
 group "org.grails.plugins"
 
 apply plugin:"eclipse"
