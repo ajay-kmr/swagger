@@ -6,6 +6,8 @@ package swagger
 class UrlMappings {
 
     static mappings = {
+        "/apidoc/group/$groupName?"(controller: "apiDoc", action: "getDocuments")
         "/apidoc/$action?/$id?"(controller: "apiDoc", action: "getDocuments")
+
     }
 }
