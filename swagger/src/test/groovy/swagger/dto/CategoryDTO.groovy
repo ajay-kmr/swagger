@@ -1,4 +1,4 @@
-package dto
+package swagger.dto
 
 import io.swagger.annotations.ApiModel
 

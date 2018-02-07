@@ -18,7 +18,12 @@ class ApiDocController {
     def getDocuments() {
         if (request.getHeader('accept') && request.getHeader('accept').indexOf(MediaType.APPLICATION_JSON_VALUE) > -1) {
             try {
-                String swaggerJson = swaggerService.generateSwaggerDocument()
+                String swaggerJson
+                if (params.groupName) {
+                    swaggerJson = swaggerService.generateSwaggerGroupDocument(params.groupName)
+                } else {
+                    swaggerJson = swaggerService.generateSwaggerDocument()
+                }
                 render contentType: MediaType.APPLICATION_JSON_UTF8_VALUE,
                         text: swaggerJson
 

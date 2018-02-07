@@ -1,7 +1,7 @@
-package services.swaggerResources
+package swagger.resources
 
-import dto.CityDTO
-import dto.ResponseDTO
+import swagger.dto.CityDTO
+import swagger.dto.ResponseDTO
 import grails.converters.JSON
 
 class NonSwaggerAnnotatedResource {

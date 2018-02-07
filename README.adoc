@@ -6,90 +6,73 @@ Table of Contents
 . Configuration
 . How To Use
 . Sample Code
+. Change Log
 
-Introduction
-~~~~~~~~~~~~~
+:toc:
 
-This plugin provides easy integration of Swagger with GRAILS. It is highly aligned with Swagger and its 2.0 specification, thereby creating a language-agnostic interface to REST APIs. This allows both humans and computers to discover and understand the capabilities of service without access to source code, documentation simply through network traffic inspection
 
-Installation
-~~~~~~~~~~~~~
-. Add repository and dependency in your *_build.gradle_* file using below lines:- 
-[source,java] 
+= Introduction
+
+This plugin provides easy integration of Swagger with GRAILS. It is highly aligned with Swagger and its 2.0 specification, thereby creating a language-agnostic interface to REST APIs. This allows both humans and computers to discover and understand the capabilities of service without access to implementation details.
+
+= Installation
+
+Add repository and dependency in your *_build.gradle_* file using below lines:
+[source,java]
 -----------------
-repositories {
-    maven { url "https://dl.bintray.com/ajay-kumar/plugins" }
-}
-
 dependencies {
-    compile 'org.grails.plugins:swagger:1.0.0'
+    compile 'org.grails.plugins:swagger:1.2.1'
 }
 -----------------
-NOTE: Your logging might not work as per your expected logback config file. +
+
+NOTE: Your host application logging might not work as per your expected logback config file. +
 This is an issue with swagger servlet jar.
 Issue has already been raised for this:- https://github.com/swagger-api/swagger-core/issues/1813[https://github.com/swagger-api/swagger-core/issues/1813] +
-However, you can easily overcome this issue by explicitly setting the name of your logback configuration file in your *_build.gradle_* using:- + 
-[source,java] 
+However, you can easily overcome this issue by explicitly setting the name of your logback configuration file in your *_build.gradle_* using:
+[source,java]
+---------
 bootRun {
     jvmArgs = [
             "-Dlogging.config=${project.projectDir}/grails-app/conf/logback.groovy"
     ]
 }
+---------
 
-NOTE: Alternatively, you can also pass the name of logback configuration file using JVM argumants or system properties as follow:-
-[source,java] 
+NOTE: Alternatively, you can also pass the name of logback configuration file using JVM argumants or system properties as follow:
+[source,java]
+---------
 java -Dlogback.configurationFile=/path/to/config.xml
+---------
+
+Please refer https://logback.qos.ch/manual/configuration.html#configFileProperty[this link] to know more about how to set logback config file location. +
 
 
-Please refer https://logback.qos.ch/manual/configuration.html#configFileProperty[this link] to know more about how to set logback config file location.
 
-Configuration
-~~~~~~~~~~~~~
+= Configuration
 
-. Expose an API from your application by adding line-  *_"/apidoc/$action?/$id?"(controller: "apiDoc", action: "getDocuments")_* in your *UrlMappings.groovy* file under the *“static mappings”* block.
-+
-NOTE: This API will be used to generate swagger document. So if you want to access your swagger document with different URI, do the necessary changes here eg if you want to expose your swagger document using URI- *_api/vi/myDoc_* then you should add *_"/api/vi/myDoc/$action?/$id?"(controller: "apiDoc", action: "getDocuments")_* in your *UrlMappings.groovy* file under the *“static mappings”* block.
+By default, this plugin will add the following url mapping to host application:
+[source,java]
+---------
+"/apidoc/$action?/$id?"(controller: "apiDoc", action: "getDocuments")
+---------
 
-. If your application is located behind a proxy that enables the required CORS headers then you need to enable CORS support too. 
-+
+This exposes an API from your application as <app-url-root>/apidoc to render Swagger API Documents.
+You can override this mapping in *UrlMappings.groovy* file in host application's *_urlMapping.groovy_* file. +
+
+NOTE: If your application is located behind a proxy that enables the required CORS headers then you need to enable CORS support too.
+
 NOTE: Please read https://github.com/swagger-api/swagger-ui#testing-cors-support[this article] to know if CORS support needs to be enabled or not for your application.
 
-. Create a configuration file (eg application.groovy) in conf folder present inside your application’s grails-app folder (if not created yet) and add the following configuration details:- 
 
-application.groovy
-[source,java]
------------------
-import io.swagger.models.Scheme
+= How To Use
 
-swagger {
-   info {
-       description = "Move your app forward with the Swagger API Documentation"
-       version = "ttn-swagger-1.0.0"
-       title = "Swagger API"
-       termsOfServices = "http://swagger.io/"
-       contact {
-           name = "Contact Us"
-           url = "http://swagger.io"
-           email = "contact@gmail.com"
-       }
-       license {
-           name = "licence under http://www.tothenew.com/"
-           url = "http://www.tothenew.com/"
-       }
-   }
-   schemes = [Scheme.HTTP]
-   consumes = ["application/json"]
-}
------------------
-How To Use
-~~~~~~~~~~~
 . A set of annotations is used to generate swagger documentation. Please refer https://github.com/swagger-api/swagger-core/wiki/Annotations[this link] to know more about the available annotations. 
 +
 NOTE: Only annotations provided by swagger-core are supported and JAX-RS annotations are not supported.
 
 . Annotate your controller class with annotation _@io.swagger.annotations.Api_ to make it available for documentation. For more details see sample code.
 
-. Annotate your methods/action of controller with _@io.swagger.annotations.ApiOperation, @io.swagger.annotations.ApiResponses, @io.swagger.annotations.ApiImplicitParams_ to include various method level information in your documentation. *See next section to know more details about how to use these annotations.*
+. Annotate your actions of controller with _@io.swagger.annotations.ApiOperation, @io.swagger.annotations.ApiResponses, @io.swagger.annotations.ApiImplicitParams_ to include various method level information in your documentation. *See next section to know more details about how to use these annotations.*
 +
 NOTE: The value corresponding to *“value”* attribute of *API* annotation present at class level and the value corresponding to *“nickname”* attribute of *“ApiOperation”* annotation present at method level when combined together, _it should form the relative end point provided in UrlMappings.groovy._ 
  *Refer to explanation below the provided sample.*
@@ -99,10 +82,17 @@ NOTE: The value corresponding to *“value”* attribute of *API* annotation pre
 +
 NOTE: If you are not explicitly providing the mapping of your actions defined in controller to the end points using *UrlMappings.groovy* file, you need not to bother about *“value”* attribute of *“API”* annotation present at *class* label and  *“nickname”* attribute of *“ApiOperation”* annotation present at *method* label. Its default value will work fine.
 
-Sample Code
-~~~~~~~~~~~~
+In addition to official Swagger annotations, this plugin also provides custom annotation:
+[source,java]
+------
+@SwaggerApiGroup
+------
 
-Assume your *UrlMappings.groovy* class is as follow:- 
+This annotation can be applied to Grails controllers to split APIs to separate api groups in order to avoid a huge single json api document when there are a large number of controllers.
+
+= Sample Code
+
+Assume your *UrlMappings.groovy* class is as follow: +
 
 [source,java]
 -----------------
@@ -124,10 +114,9 @@ class UrlMappings {
        "/api/v1/city/$cityId"(controller: "city", action: "deleteCity", method: "DELETE")
    }
 }
-
 -----------------
-Then your swagger annotated *CityController.groovy* is as follow:- 
 
+Then your swagger annotated *CityController.groovy* is as follow: +
 
 [source,java]
 -----------------
@@ -137,6 +126,7 @@ import dto.CityDTO
 import dto.ResponseDTO
 import grails.converters.JSON
 import io.swagger.annotations.*
+import swagger.SwaggerApiGroup
 
 @Api(value = "/api/v1", tags = ["City"], description = "City Api's")
 class CityController {
@@ -319,17 +309,33 @@ class CityController {
        render(new ResponseDTO(status: true,
        message: "City deleted successfully") as JSON)
    }
-
 }
-
 -----------------
-
 In the sample code provided above you can find that *CityController* is annotated with *@Api(value = "/api/v1", tags = ["City"], description = "City Api's")*.  So the value corresponding to *“value”* attribute of *“API”* annotation present at this class label is *"/api/v1"*. + 
 
-Similarly you can observe that *getCity()* method of *CityController* has annotation *@ApiOperation(value = "List Cities",  nickname = "city/{cityId}", produces = "application/json", consumes = "application/json",  httpMethod = "GET", response = ResponseDTO.class)*. Hence the value corresponding to *“nickname”* attribute of *“ApiOperation”* annotation present at this method label is *"city/{cityId}"*  and when these two values of *API* annotation and *ApiOperation* annotations  are combined together it gives- *"/api/v1/city/{cityId}"*. +
+Similarly you can observe that *getCity()* method of *CityController* has annotation *@ApiOperation(value = "List Cities",  nickname = "city/{cityId}", produces = "application/json", consumes = "application/json",  httpMethod = "GET", response = ResponseDTO.class)*. Hence the value corresponding to *“nickname”* attribute of *“ApiOperation”* annotation present at this method label is *"city/{cityId}"*  and when these two values of *API* annotation and *ApiOperation* annotations are combined together it gives *"/api/v1/city/{cityId}"*. +
 
-This combined value is Swagger's way of specifying the end url- *"/api/v1/city/$cityId"*  defined in *UrlMappings.groovy* file for *(controller: "city", action: "getCity", method: "GET")*
+This combined value is Swagger's way of specifying the end url- *"/api/v1/city/$cityId"*  defined in *UrlMappings.groovy* file for *(controller: "city", action: "getCity", method: "GET")* +
+
+If this controller's endpoints need to be in a separate json doc with a specific url, the @SwaggerApiGroup annotation can be added to the controller, for example:
+[source,java]
+------
+@SwaggerApiGroup('MyApiGroup')
+@Api(...)
+class CityController {
+...
+------
+
+With the annotation above, the swagger API document is separate from the global document and available with uri: '<root-url>/apidoc/group/MyApiGroup',
 
 
+
+= Change Log
+
+- v 1.2.2: Add annotation based API grouping to split large global json document to multiple modular ones.
+
+- v 1.2.1: Enhance the Object to Json Serializer to strip Grails Gorm traits such as Spring validation Errors type.
+
+- v 1.2.0: Plugin support Grails 3+
 
 

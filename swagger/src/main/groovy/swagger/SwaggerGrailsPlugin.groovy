@@ -1,36 +1,30 @@
 package swagger
 
 import grails.plugins.Plugin
+import io.swagger.converter.ModelConverters
 import io.swagger.models.*
 import org.apache.commons.lang.StringUtils
 
 class SwaggerGrailsPlugin extends Plugin {
 
     // the version or versions of Grails the plugin is designed for
-    def grailsVersion = "3.1.9 > *"
+    def grailsVersion = "3.2.0 > *"
     // resources that are excluded from plugin packaging
     def pluginExcludes = [
-            "grails-app/views/error.gsp",
-            "**/services.swaggerResources**",
-            "**/logback.groovy",
-            "**/logback.xml",
-            "**/logback**",
-            "**/logback/**",
-            "**/co/**",
-            "**/dto/**",
-            "**/schema_v2_0.json"
+        "grails-app/views/error.gsp"
     ]
 
-    def title = "Grails Swagger"
-    def author = "Ajay Kumar"
-    def authorEmail = "ajay.kumar@totthenew.com"
+    // TODO Fill in these fields
+    def title = "Swagger" // Headline display name of the plugin
+    def author = "Bin Le"
+    def authorEmail = "bin.le.code@gmail.com"
     def description = '''\
-Grails Plugin For Swagger Documentation
+Grails Plugin For Swagger API Documentation
 '''
     def profiles = ['web']
 
     // URL to the plugin's documentation
-    def documentation = "http://grails.org/plugin/swagger"
+    def documentation = "https://github.com/binlecode/swagger"
 
     // Extra (optional) plugin metadata
 
@@ -52,33 +46,55 @@ Grails Plugin For Swagger Documentation
     def observe = ['controllers', 'services']
     def loadAfter = ['controllers', 'services']
 
-    Closure doWithSpring() {
-        { ->
-            swagger(Swagger) {
-                Map swaggerConfig = (config.swagger as Map) ?: [:]
-                Map infoConfig = swaggerConfig.info ?: [:]
-                Info swaggerInfo = new Info(
-                        description: infoConfig.description ?: StringUtils.EMPTY,
-                        version: infoConfig.version ?: StringUtils.EMPTY,
-                        title: infoConfig.title ?: StringUtils.EMPTY,
-                        termsOfService: infoConfig.termsOfServices ?: StringUtils.EMPTY
-                )
-                Map contactConfig = infoConfig.contact ?: [:]
-                swaggerInfo.setContact(new Contact(
-                        name: contactConfig.name ?: StringUtils.EMPTY,
-                        url: contactConfig.url ?: StringUtils.EMPTY,
-                        email: contactConfig.email ?: StringUtils.EMPTY)
-                )
-                Map licenseConfig = infoConfig.license ?: [:]
-                swaggerInfo.license(new License(
-                        name: licenseConfig.name ?: StringUtils.EMPTY,
-                        url: licenseConfig.url ?: StringUtils.EMPTY)
-                )
-                info = swaggerInfo
+    Closure doWithSpring() { {->
+        swagger(Swagger) {
+            Map swaggerConfig = (config.swagger as Map) ?: [:]
+            Map infoConfig = swaggerConfig.info ?: [:]
+            Info swaggerInfo = new Info(
+                    description: infoConfig.description ?: StringUtils.EMPTY,
+                    version: infoConfig.version ?: StringUtils.EMPTY,
+                    title: infoConfig.title ?: StringUtils.EMPTY,
+                    termsOfService: infoConfig.termsOfServices ?: StringUtils.EMPTY
+            )
+            Map contactConfig = infoConfig.contact ?: [:]
+            swaggerInfo.setContact(new Contact(
+                    name: contactConfig.name ?: StringUtils.EMPTY,
+                    url: contactConfig.url ?: StringUtils.EMPTY,
+                    email: contactConfig.email ?: StringUtils.EMPTY)
+            )
+            Map licenseConfig = infoConfig.license ?: [:]
+            swaggerInfo.license(new License(
+                    name: licenseConfig.name ?: StringUtils.EMPTY,
+                    url: licenseConfig.url ?: StringUtils.EMPTY)
+            )
+            info = swaggerInfo
 //                host = swaggerAsMap.host ?: "localhost:8080"
-                schemes = swaggerConfig.schemes ?: [Scheme.HTTP]
-                consumes = swaggerConfig.consumes ?: ["application/json"]
-            }
+            schemes = swaggerConfig.schemes ?: [Scheme.HTTP]
+            consumes = swaggerConfig.consumes ?: ["application/json"]
         }
+    } }
+
+    void doWithDynamicMethods() {
+        // TODO Implement registering dynamic methods to classes (optional)
+    }
+
+    void doWithApplicationContext() {
+        // add custom model converters
+        ModelConverters.instance.addConverter(new GormPropertyConverter())
+    }
+
+    void onChange(Map<String, Object> event) {
+        // TODO Implement code that is executed when any artefact that this plugin is
+        // watching is modified and reloaded. The event contains: event.source,
+        // event.application, event.manager, event.ctx, and event.plugin.
+    }
+
+    void onConfigChange(Map<String, Object> event) {
+        // TODO Implement code that is executed when the project configuration changes.
+        // The event is the same as for 'onChange'.
+    }
+
+    void onShutdown(Map<String, Object> event) {
+        // TODO Implement code that is executed when the application shuts down (optional)
     }
 }
