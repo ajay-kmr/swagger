@@ -6,23 +6,25 @@ import io.swagger.annotations.ApiImplicitParams
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiResponse
 import io.swagger.annotations.ApiResponses
+import swagger.SwaggerApiGroup
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
-@Api(value = 'book', description = 'book resource')
+@SwaggerApiGroup('Business')
+@Api(value = 'store', description = 'store resource')
 @Transactional(readOnly = true)
-class BookController {
+class StoreController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", show: 'GET', index: 'GET']
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     @ApiOperation(
-            value = "List Books",
+            value = "List Stores",
             nickname = "/",
             produces = "application/json",
             consumes = "application/json",
             httpMethod = "GET",
-            response = Book,
+            response = Store,
             responseContainer = 'array'
     )
     @ApiResponses([
@@ -52,17 +54,17 @@ class BookController {
     ])
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Book.list(params), model:[bookCount: Book.count()]
+        respond Store.list(params), model:[storeCount: Store.count()]
     }
 
 
     @ApiOperation(
-            value = "Show Book",
+            value = "Show Store",
             nickname = "/{id}",
             produces = "application/json",
             consumes = "application/json",
             httpMethod = "GET",
-            response = Book
+            response = Store
     )
     @ApiResponses([
             @ApiResponse(code = 405, message = "Method Not Allowed. Only GET is allowed"),
@@ -75,82 +77,82 @@ class BookController {
                     dataType = 'string',
                     required = true)
     ])
-    def show(Book book) {
-        respond book
+    def show(Store store) {
+        respond store
     }
 
     def create() {
-        respond new Book(params)
+        respond new Store(params)
     }
 
     @Transactional
-    def save(Book book) {
-        if (book == null) {
+    def save(Store store) {
+        if (store == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        if (book.hasErrors()) {
+        if (store.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond book.errors, view:'create'
+            respond store.errors, view:'create'
             return
         }
 
-        book.save flush:true
+        store.save flush:true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'book.label', default: 'Book'), book.id])
-                redirect book
+                flash.message = message(code: 'default.created.message', args: [message(code: 'store.label', default: 'Store'), store.id])
+                redirect store
             }
-            '*' { respond book, [status: CREATED] }
+            '*' { respond store, [status: CREATED] }
         }
     }
 
-    def edit(Book book) {
-        respond book
+    def edit(Store store) {
+        respond store
     }
 
     @Transactional
-    def update(Book book) {
-        if (book == null) {
+    def update(Store store) {
+        if (store == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        if (book.hasErrors()) {
+        if (store.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond book.errors, view:'edit'
+            respond store.errors, view:'edit'
             return
         }
 
-        book.save flush:true
+        store.save flush:true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'book.label', default: 'Book'), book.id])
-                redirect book
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'store.label', default: 'Store'), store.id])
+                redirect store
             }
-            '*'{ respond book, [status: OK] }
+            '*'{ respond store, [status: OK] }
         }
     }
 
     @Transactional
-    def delete(Book book) {
+    def delete(Store store) {
 
-        if (book == null) {
+        if (store == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        book.delete flush:true
+        store.delete flush:true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'book.label', default: 'Book'), book.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'store.label', default: 'Store'), store.id])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
@@ -160,7 +162,7 @@ class BookController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'book.label', default: 'Book'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'store.label', default: 'Store'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }

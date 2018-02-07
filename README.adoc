@@ -82,6 +82,14 @@ NOTE: The value corresponding to *“value”* attribute of *API* annotation pre
 +
 NOTE: If you are not explicitly providing the mapping of your actions defined in controller to the end points using *UrlMappings.groovy* file, you need not to bother about *“value”* attribute of *“API”* annotation present at *class* label and  *“nickname”* attribute of *“ApiOperation”* annotation present at *method* label. Its default value will work fine.
 
+In addition to official Swagger annotations, this plugin also provides custom annotation:
+[source,java]
+------
+@SwaggerApiGroup
+------
+
+This annotation can be applied to Grails controllers to split APIs to separate api groups in order to avoid a huge single json api document when there are a large number of controllers.
+
 = Sample Code
 
 Assume your *UrlMappings.groovy* class is as follow: +
@@ -118,6 +126,7 @@ import dto.CityDTO
 import dto.ResponseDTO
 import grails.converters.JSON
 import io.swagger.annotations.*
+import swagger.SwaggerApiGroup
 
 @Api(value = "/api/v1", tags = ["City"], description = "City Api's")
 class CityController {
@@ -308,8 +317,22 @@ Similarly you can observe that *getCity()* method of *CityController* has annota
 
 This combined value is Swagger's way of specifying the end url- *"/api/v1/city/$cityId"*  defined in *UrlMappings.groovy* file for *(controller: "city", action: "getCity", method: "GET")* +
 
+If this controller's endpoints need to be in a separate json doc with a specific url, the @SwaggerApiGroup annotation can be added to the controller, for example:
+[source,java]
+------
+@SwaggerApiGroup('MyApiGroup')
+@Api(...)
+class CityController {
+...
+------
+
+With the annotation above, the swagger API document is separate from the global document and available with uri: '<root-url>/apidoc/group/MyApiGroup',
+
+
 
 = Change Log
+
+- v 1.2.2: Add annotation based API grouping to split large global json document to multiple modular ones.
 
 - v 1.2.1: Enhance the Object to Json Serializer to strip Grails Gorm traits such as Spring validation Errors type.
 
