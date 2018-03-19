@@ -21,31 +21,9 @@ Add repository and dependency in your *_build.gradle_* file using below lines:
 [source,java]
 -----------------
 dependencies {
-    compile 'org.grails.plugins:swagger:1.2.1'
+    compile 'org.grails.plugins:swagger:1.2.3'
 }
 -----------------
-
-NOTE: Your host application logging might not work as per your expected logback config file. +
-This is an issue with swagger servlet jar.
-Issue has already been raised for this:- https://github.com/swagger-api/swagger-core/issues/1813[https://github.com/swagger-api/swagger-core/issues/1813] +
-However, you can easily overcome this issue by explicitly setting the name of your logback configuration file in your *_build.gradle_* using:
-[source,java]
----------
-bootRun {
-    jvmArgs = [
-            "-Dlogging.config=${project.projectDir}/grails-app/conf/logback.groovy"
-    ]
-}
----------
-
-NOTE: Alternatively, you can also pass the name of logback configuration file using JVM argumants or system properties as follow:
-[source,java]
----------
-java -Dlogback.configurationFile=/path/to/config.xml
----------
-
-Please refer https://logback.qos.ch/manual/configuration.html#configFileProperty[this link] to know more about how to set logback config file location. +
-
 
 
 = Configuration
@@ -331,6 +309,8 @@ With the annotation above, the swagger API document is separate from the global 
 
 
 = Change Log
+
+- v 1.2.3: upgrade swagger API core library to 1.5.18 (current stable version) to fix logging override issue
 
 - v 1.2.2: Add annotation based API grouping to split large global json document to multiple modular ones.
 
