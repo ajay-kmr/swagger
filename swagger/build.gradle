@@ -12,7 +12,7 @@ buildscript {
     }
 }
 
-version "1.0.0"
+version "1.0.1"
 group "org.grails.plugins"
 
 apply plugin: "eclipse"
@@ -27,7 +27,7 @@ apply plugin: "asset-pipeline"
 ext {
     grailsVersion = project.grailsVersion
     gradleWrapperVersion = project.gradleWrapperVersion
-    swaggerVersion = '1.5.15'
+    swaggerVersion = '1.5.21'
     swaggerUIVersion = '3.0.17'
 }
 
