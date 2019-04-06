@@ -65,7 +65,7 @@ class TestimonialResource {
                     paramType = 'body',
                     required = true,
                     value = "Requires Testimonial Multipart form data",
-                    dataType = "com.dt.dtcore.dto.TestimonialDTO"),
+                    dataType = "com.dt.dtcore.TestimonialDTO"),
             @ApiImplicitParam(name = "applicationType",
                     paramType = "header",
                     required = true,

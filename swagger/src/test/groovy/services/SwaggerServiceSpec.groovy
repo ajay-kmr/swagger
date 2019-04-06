@@ -8,6 +8,7 @@ import com.github.fge.jsonschema.core.report.ProcessingMessage
 import com.github.fge.jsonschema.core.report.ProcessingReport
 import com.github.fge.jsonschema.main.JsonSchema
 import com.github.fge.jsonschema.main.JsonSchemaFactory
+import dto.CityDTO
 import grails.test.mixin.TestFor
 import grails.web.mapping.LinkGenerator
 import io.swagger.annotations.Api
@@ -15,12 +16,13 @@ import io.swagger.models.*
 import org.springframework.context.ApplicationContext
 import org.springframework.core.io.ClassPathResource
 import org.springframework.core.io.Resource
-import spock.lang.Shared
-import spock.lang.Specification
-import swagger.SwaggerService
 import services.swaggerResources.NonSwaggerAnnotatedResource
 import services.swaggerResources.SwaggerAnnotatedResource
 import services.swaggerResources.TestimonialResource
+import spock.lang.Shared
+import spock.lang.Specification
+import spock.lang.Unroll
+import swagger.SwaggerService
 
 @TestFor(SwaggerService)
 class SwaggerServiceSpec extends Specification {
@@ -76,16 +78,25 @@ class SwaggerServiceSpec extends Specification {
         validate(jsonDocument, jsonSchema_V2_0) == Boolean.TRUE
     }
 
+    @Unroll
     void "test invalid swagger JSON document generation as per JSON Schema for Swagger 2.0 API"() {
 
         given: "class not annotated with valid swagger annotation"
-        service.applicationContext.getBeansWithAnnotation(Api.class) >> [(NonSwaggerAnnotatedResource.name): (new NonSwaggerAnnotatedResource())]
+        service.applicationContext.getBeansWithAnnotation(Api.class) >> { apiAnnotatedBean }
 
         when: "service is called to generate swagger document as per Swagger 2.0 API"
         String jsonDocument = service.generateSwaggerDocument()
 
         then: "generated document should not be as per schema corresponding to Swagger 2.0 API"
         validate(jsonDocument, jsonSchema_V2_0) == Boolean.FALSE
+
+        where:
+        apiAnnotatedBean << [
+                null,
+                [:],
+                [(CityDTO.name): (new CityDTO())],
+                [(NonSwaggerAnnotatedResource.name): (new NonSwaggerAnnotatedResource())],
+        ]
     }
 
 

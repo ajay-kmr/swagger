@@ -27,16 +27,16 @@ class SwaggerService implements ApplicationContextAware {
         host = host.replace($/https:///$, StringUtils.EMPTY)
         swagger.setHost(host)
         Map<String, Object> swaggerResourcesAsMap = applicationContext.getBeansWithAnnotation(Api.class)
-        List<Class> swaggerResources = swaggerResourcesAsMap.collect { it.value?.class }
+        Set<Class> swaggerResources = swaggerResourcesAsMap?.collect { it?.value?.class } as Set
         if (swaggerResources) {
-            Reader.read(swagger, new HashSet<Class<?>>(swaggerResources))
+            Reader.read(swagger, swaggerResources)
         }
         return swagger
     }
 
     static String getJsonDocument(Swagger swagger) {
         String swaggerJson = null
-        if (swagger != null) {
+        if (swagger) {
             try {
                 swaggerJson = Json.mapper().writeValueAsString(swagger)
             } catch (JsonProcessingException e) {

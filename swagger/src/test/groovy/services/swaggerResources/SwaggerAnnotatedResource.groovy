@@ -68,7 +68,7 @@ class SwaggerAnnotatedResource {
             @ApiResponse(code = 404, message = "Method Not Found")
     ])
     @ApiImplicitParams([
-            @ApiImplicitParam(name = "body", paramType = "body", required = true, value = "Requires City Details", dataType = "dto.CityDTO"),
+            @ApiImplicitParam(name = "body", paramType = "body", required = true, value = "Requires City Details", dataType = "CityDTO"),
             @ApiImplicitParam(name = "applicationType", paramType = "header", required = true, defaultValue = "web", value = "Application Types", dataType = "string"),
             @ApiImplicitParam(name = "Accept-Language", paramType = "header", required = true, defaultValue = "en", value = "Accept-Language", dataType = "string")
     ])

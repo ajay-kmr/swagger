@@ -24,7 +24,7 @@ class CityDTO {
     Date lastUpdatedDateFrom
     Date lastUpdatedDateTo
 
-    @ApiModelProperty(value = "Inner Object Details", dataType = "dto.CategoryDTO")
+    @ApiModelProperty(value = "Inner Object Details", dataType = "CategoryDTO")
     CategoryDTO categoryDTO
 
 }
