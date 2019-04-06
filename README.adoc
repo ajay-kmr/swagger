@@ -83,7 +83,9 @@ swagger {
 -----------------
 How To Use
 ~~~~~~~~~~~
-. A set of annotations is used to generate swagger documentation. Please refer https://github.com/swagger-api/swagger-core/wiki/Annotations[this link] to know more about the available annotations. 
+. Next there is a good example to show you how the set of annotations can be used to generate swagger documentation.
+ Please refer https://github.com/ajay-kmr/swagger/blob/master/swagger/src/test/groovy/services/swaggerResources/SwaggerAnnotatedResource.groovy[this sample example] to know more.
+. A set of annotations is used to generate swagger documentation. Please refer https://github.com/swagger-api/swagger-core/wiki/Annotations[this link] to know more about the available annotations.
 +
 NOTE: Only annotations provided by swagger-core are supported and JAX-RS annotations are not supported.
 
@@ -320,6 +322,27 @@ class CityController {
        message: "City deleted successfully") as JSON)
    }
 
+    @ApiOperation(value = "Upload File Example",
+            notes = "Upload File Example",
+            nickname = "/city/upload",
+            response = ResponseDTO.class,
+            httpMethod = "POST")
+    @ApiResponses(value = [
+            @ApiResponse(code = 405, message = "Method Not Allowed. Only POST is allowed"),
+            @ApiResponse(code = 404, message = "Method Not Found")
+    ])
+    @ApiImplicitParams([
+            @ApiImplicitParam(name = 'cityFile', paramType = 'form',
+                    required = true,
+                    value = "Requires File Containing City Information",
+                    dataType = "java.io.File")])
+    ResponseDTO uploadCityData(HttpServletRequest request) {
+      // Demonstrate how to use swagger annotation to generate documentation
+      // for method which accepts MultipartFile in request.
+        MultipartFile file = request.getFile('cityFile')
+        //Do with file
+        (new ResponseDTO(status: true, message: "File with name ${file?.originalFilename} uploaded successfully") as JSON)
+    }
 }
 
 -----------------
