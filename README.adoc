@@ -133,8 +133,8 @@ Then your swagger annotated *CityController.groovy* is as follow:-
 -----------------
 package testswaggerplugin
 
-import dto.CityDTO
-import dto.ResponseDTO
+import CityDTO
+import ResponseDTO
 import grails.converters.JSON
 import io.swagger.annotations.*
 
@@ -258,7 +258,7 @@ class CityController {
            paramType = "body", 
            required = true, 
            value = "Requires City Details", 
-           dataType = "dto.CityDTO"),
+           dataType = "CityDTO"),
            
            @ApiImplicitParam(name = "applicationType",
            paramType = "header", 

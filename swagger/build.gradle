@@ -53,7 +53,7 @@ dependencies {
     provided "org.grails:grails-plugin-services"
     testCompile "org.grails:grails-plugin-testing"
     testCompile "org.grails.plugins:geb"
-    testRuntime group: 'com.github.fge', name: 'json-schema-validator', version: '2.2.6'
+    testCompile group: 'com.github.fge', name: 'json-schema-validator', version: '2.2.6'
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
 
