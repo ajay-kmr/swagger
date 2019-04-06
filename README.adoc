@@ -22,7 +22,7 @@ repositories {
 }
 
 dependencies {
-    compile 'org.grails.plugins:swagger:1.0.0'
+    compile 'org.grails.plugins:swagger:1.0.1'
 }
 -----------------
 NOTE: If you are using version 1.0.1 or older, your logging might not work as per your expected logback config file. +
