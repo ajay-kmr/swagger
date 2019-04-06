@@ -25,7 +25,7 @@ class ApiDocController {
             } catch (Exception e) {
                 e.printStackTrace()
                 render status: HttpStatus.INTERNAL_SERVER_ERROR,
-                        text: 'Some error occurred'
+                        text: HttpStatus.INTERNAL_SERVER_ERROR.reasonPhrase
             }
         } else {
             redirect uri: "/webjars/swagger-ui${getSwaggerUiFile()}?url=${request.getRequestURI()}"
